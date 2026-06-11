@@ -24,18 +24,28 @@ print(f"Total earthquakes fetched: {data['metadata']['count']}")
 
 earthquakes = data['features']
 
+
+
 rows = []
 for eq in earthquakes:
     props = eq['properties']
     coords = eq['geometry']['coordinates']
+    
     rows.append({
         'magnitude': props['mag'],
         'place': props['place'],
-        'time': props['time'],
+        'date': props['time'],
         'longitude': coords[0],
         'latitude': coords[1],
         'depth': coords[2]
     })
 
 df = pd.DataFrame(rows)
+df['date'] = pd.to_datetime(df['date'], unit='ms')
+df.dropna(subset=['magnitude'], inplace=True)
+df.to_csv("eq_data.csv",index=False)
+
 print(df.head())
+print(f"Date range: {df['date'].min()} to {df['date'].max()}")
+print(f"Magnitude range: {df['magnitude'].min()} to {df['magnitude'].max()}")
+print(f"Rows after cleaning: {len(df)}")
