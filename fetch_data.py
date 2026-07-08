@@ -8,7 +8,7 @@ url = "https://earthquake.usgs.gov/fdsnws/event/1/query"
 
 params = {
     "format": "geojson",
-    "starttime": "2020-01-01",
+    "starttime": "2026-01-01",
     "endtime": today,
     "minmagnitude": 3.0,
     "minlatitude": 24.5,
